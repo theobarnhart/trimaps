@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1081px;
+            height: 665px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/run_double_line_1.js"></script>
+        <script src="data/run_start_finish_2.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[46.598918062781536,-112.03054126933048],[46.60040979936362,-112.02700793032075]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        var layer_GoogleRoad_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+            opacity: 1.0,
+            attribution: '',
+        });
+        layer_GoogleRoad_0;
+        map.addLayer(layer_GoogleRoad_0);
+        function pop_run_double_line_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_run_double_line_1_0() {
+            return {
+                pane: 'pane_run_double_line_1',
+                opacity: 1,
+                color: 'rgba(141,90,153,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_run_double_line_1');
+        map.getPane('pane_run_double_line_1').style.zIndex = 401;
+        map.getPane('pane_run_double_line_1').style['mix-blend-mode'] = 'normal';
+        var layer_run_double_line_1 = new L.geoJson(json_run_double_line_1, {
+            attribution: '',
+            pane: 'pane_run_double_line_1',
+            onEachFeature: pop_run_double_line_1,
+            style: style_run_double_line_1_0,
+        });
+        bounds_group.addLayer(layer_run_double_line_1);
+        map.addLayer(layer_run_double_line_1);
+        function pop_run_start_finish_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['label'] !== null ? Autolinker.link(String(feature.properties['label'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_run_start_finish_2_0() {
+            return {
+                pane: 'pane_run_start_finish_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+            }
+        }
+        map.createPane('pane_run_start_finish_2');
+        map.getPane('pane_run_start_finish_2').style.zIndex = 402;
+        map.getPane('pane_run_start_finish_2').style['mix-blend-mode'] = 'normal';
+        var layer_run_start_finish_2 = new L.geoJson(json_run_start_finish_2, {
+            attribution: '',
+            pane: 'pane_run_start_finish_2',
+            onEachFeature: pop_run_start_finish_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_run_start_finish_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_run_start_finish_2);
+        map.addLayer(layer_run_start_finish_2);
+        setBounds();
+        var i = 0;
+        layer_run_start_finish_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['label'] !== null?String('<div style="color: #000000; font-size: 16pt; font-family: \'.SF NS Text\', sans-serif;">' + layer.feature.properties['label']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_run_start_finish_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_runstartfinish_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_runstartfinish_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_runstartfinish_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_runstartfinish_2]);
+        });
+        </script>
+    </body>
+</html>
